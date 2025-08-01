@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inscripción a la charla</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: url('https://i.imgur.com/mo3Rut2.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #ffffff;
+    }
+
+    .form-container {
+      background: rgba(33, 33, 33, 0.9);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 600px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+    .subtitle {
+  text-align: center;
+  font-size: 16px;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+
+    label {
+      margin-top: 10px;
+      display: block;
+      font-weight: bold;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #555;
+      border-radius: 5px;
+      background: #1e1e1e;
+      color: #ffffff;
+      font-size: 16px;
+    }
+
+    button {
+      background: #0a406b;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #ffa726;
+    }
+
+    .success-message {
+      color: #4caf50;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .error-message {
+      color: #f44336;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Automatización AV sin programación: Muse Automator</h1>
+    <p class="subtitle">Jueves 11 a las 15:00h | Aula 3</p>
+
+    <form id="simpleForm">
+      <label for="name">Nombre:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="company">Empresa:</label>
+      <input type="text" id="company" name="company" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="notes">Notas adicionales (opcional):</label>
+      <textarea id="notes" name="notes" rows="4"></textarea>
+
+      <button type="submit">Inscribirme</button>
+    </form>
+    <div id="message" class="success-message" style="display: none;">¡Formulario enviado correctamente!</div>
+  </div>
+
+  <script>
+    document.getElementById('simpleForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        await fetch('https://script.google.com/macros/s/AKfycbwOvDR6ZuQgRrsf08v4iVDxdcwED_djMEOPv38C9sikvPsMmwvtJrH5HlOEHI-nq1693g/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+          mode: 'no-cors'
+        });
+
+        document.getElementById('simpleForm').reset();
+        document.getElementById('message').style.display = 'block';
+      } catch (error) {
+        console.error('Error al enviar:', error);
+        alert('Hubo un error al enviar el formulario.');
+      }
+    });
+  </script>
+</body>
+</html>
